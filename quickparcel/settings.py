@@ -136,6 +136,10 @@ STATIC_URL = '/static/'
 LOGIN_URL = '/sign-in'
 LOGIN_REDIRECT_URL = '/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
