@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from core.customer import forms
 
+from django.contrib import messages
 
 # Create your views here.
 
@@ -22,6 +23,8 @@ def profile_page(request):
         if user_form.is_valid() and customer_form.is_valid():
             customer_form.save()
             user_form.save()
+
+            messages.success(request, 'Your profile has been updated')
             return redirect(reverse('customer:profile'))
 
     return render(request, 'customer/profile.html', {
