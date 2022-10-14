@@ -1,92 +1,158 @@
 {% extends 'customer/base.html' %}
 {% load bootstrap4 %}
-
 {% block head %}
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAd44NtKzs-G_4k5zuxNKw2_laWj8cMv9Y",
-      authDomain: "quick-parcel-92a1f.firebaseapp.com",
-      projectId: "quick-parcel-92a1f",
-      storageBucket: "quick-parcel-92a1f.appspot.com",
-      messagingSenderId: "481072622582",
-      appId: "1:481072622582:web:8237660a8722fdf79df5d7"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-  </script>
 
-{% endblock %}
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js"></script>
 
+<!-- TODO: Add SDKs for Firebase products that you want to use
+https://firebase.google.com/docs/web/setup#available-libraries -->
 
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAd44NtKzs-G_4k5zuxNKw2_laWj8cMv9Y",
+    authDomain: "quick-parcel-92a1f.firebaseapp.com",
+    projectId: "quick-parcel-92a1f",
+    storageBucket: "quick-parcel-92a1f.appspot.com",
+    messagingSenderId: "481072622582",
+    appId: "1:481072622582:web:8237660a8722fdf79df5d7",
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+{% endblock %} 
 {% block main %}
 <!--Basic Information-->
-<b class="text-secondary">Basic Information</b><br>
+<b class="text-secondary">Basic Information</b><br />
 <div class="card bg-white mt-2 mb-5">
-<div class="card-body">
+  <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form user_form %}
-        {% bootstrap_form customer_form %}
-        <input type="hidden" name="action" value="update_profile">
-        <button type="submit" class="btn btn-warning">Save</button>
+      {% csrf_token %} 
+      {% bootstrap_form user_form %} 
+      {% bootstrap_form customer_form %}
+      <input type="hidden" name="action" value="update_profile" />
+      <button type="submit" class="btn btn-warning">Save</button>
     </form>
-</div>
+  </div>
 </div>
 
 <!--Password Reset-->
-<b class="text-secondary">Change Password</b><br>
+<b class="text-secondary">Change Password</b><br />
 <div class="card bg-white mt-2 mb-5">
-<div class="card-body">
+  <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form password_form %}
-        <input type="hidden" name="action" value="update_password">
-        <button type="submit" class="btn btn-warning">Save</button>
+      {% csrf_token %} 
+      {% bootstrap_form password_form %}
+      <input type="hidden" name="action" value="update_password" />
+      <button type="submit" class="btn btn-warning">Save</button>
     </form>
-</div>
-
+  </div>
 </div>
 
 <!-- Phone Number-->
+<!-- Phone Number -->
+<b class="text-secondary">Phone Number</b>
 <div class="card bg-white mt-2 mb-5">
-    <div class="card-body">
+  <div class="card-body">
+    <div id="recaptcha-container"></div>
 
-      <div id="get-code" class="input-group mb-3 {% if user.customer.phone_number %} d-none {% endif %}">
-        <input type="text" class="form-control" placeholder="+56123456789">
-        <div class="input-group-append">
-          <button class="btn btn-warning">Send code</button>
-        </div>
+    <div
+      id="get-code"
+      class="input-group mb-3 {% if request.user.customer.phone_number %} d-none {% endif%}"
+    >
+      <input type="text" class="form-control" placeholder="Your phone number" />
+      <div class="input-group-append">
+        <button class="btn btn-warning" type="button">Send Code</button>
       </div>
-
-      <div id="verify-code" class="input-group mb-3 d-none">
-        <input type="text" class="form-control" placeholder="Verification code">
-        <div class="input-group-append">
-          {% csrf_token %}
-          <button class="btn btn-warning">Send code</button>
-        </div>
-      </div>
-
-      <div id="change-phone" class="input-group mb-3 {% if not user.customer.phone_number %}d-none{% endif %} ">
-        <input type="text" class="form-control" disabled
-               value="{{ user.customer.phone_number }}">
-        <div class="input-group-append">
-          <button class="btn btn-warning">Change</button>
-        </div>
-      </div>
-
-      <div id="recaptcha-container"></div>
-
     </div>
 
+    <div id="verify-code" class="input-group mb-3 d-none">
+      <input type="text" class="form-control" placeholder="Verification code" />
+      <div class="input-group-append">
+        <button class="btn btn-warning" type="button">Verify Code</button>
+      </div>
+    </div>
+
+    <div
+      id="change-phone"
+      class="input-group mb-3 {% if not request.user.customer.phone_number %} d-none {% endif%}"
+    >
+      <input
+        type="text"
+        class="form-control"
+        disabled
+        value="{{ request.user.customer.phone_number }}"
+      />
+      <div class="input-group-append">
+        <button class="btn btn-warning" type="button">Change</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
+<script>
+    // window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+    //   "recaptcha-container",
+    //   {
+    //     size: "invisible",
+    //   }
+    // );
 
-{% endblock %}
+    
+
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+
+    $("#get-code button").on("click", function () {
+      const phoneNumber = $("#get-code input").val();
+      console.log(phoneNumber);
+
+      firebase
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+          // SMS sent. Prompt user to type the code from the message, then sign the
+          // user in with confirmationResult.confirm(code).
+          console.log(confirmationResult);
+          window.confirmationResult = confirmationResult;
+
+          $("#get-code").addClass("d-none");
+          $("#verify-code").removeClass("d-none");
+        })
+        .catch((error) => {
+          // Error; SMS not sent
+          toast(error.message, "error");
+        });
+    });
+
+    $("#verify-code button").on("click", function () {
+      const code = $("#verify-code input").val();
+      console.log(code);
+
+      confirmationResult
+        .confirm(code)
+        .then((result) => {
+          // User signed in successfully.
+          const user = result.user;
+          console.log(user.phoneNumber);
+
+          user.getIdToken().then(function (idToken) {
+            console.log(idToken);
+            onVerify(idToken);
+          });
+        })
+        .catch((error) => {
+          // User couldn't sign in (bad verification code?)
+          toast(error.message, "error");
+        });
+    });
+  </script>
+
+  
+
+  {% endblock %}
