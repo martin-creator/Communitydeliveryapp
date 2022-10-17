@@ -1,3 +1,4 @@
+import stripe
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -6,9 +7,12 @@ from core.customer import forms
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.conf import settings
 
 # Create your views here.
 
+
+stripe.api_key = settings.STRIPE_API_SECRET_KEY
 
 @login_required()
 def home(request):
@@ -51,4 +55,18 @@ def profile_page(request):
 
 @login_required(login_url="/sign-in/?next=/customer/")
 def payment_method_page(request):
-    return render(request, 'customer/payment_method.html')
+    current_customer = request.user.customer
+
+    #save stripe customer info
+    if not current_customer.stripe_customer_id:
+        customer = stripe.Customer.create()
+        current_customer.stripe_customer_id = customer['id']
+        current_customer.save()
+
+    intent = stripe.SetupIntent.create(
+        customer = current_customer.stripe_customer_id
+    )
+    return render(request, 'customer/payment_method.html',{
+        "client_secret": intent.client_secret,
+        "STRIPE_API_PUBLIC_KEY": settings.STRIPE_API_PUBLIC_KEY,
+    })
