@@ -16,6 +16,9 @@ from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env(
+    #Set casting, default value
+    DEBUG=(bool, False) )
 env = environ.Env()
 environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
@@ -161,4 +164,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'Quick Parcel<no-reply@quickparcel.localhost>'
+
+STRIPE_API_PUBLIC_KEY = env('STRIPE_API_PUBLIC_KEY')
+STRIPE_API_SECRET_KEY = env('STRIPE_API_SECRET_KEY')
+
 
