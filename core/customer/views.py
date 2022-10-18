@@ -134,10 +134,13 @@ def create_job_page(request):
             if step2_form.is_valid():
                 creating_job = step2_form.save()
                 return redirect(reverse('customer:create_job'))
+        
 
     # Determine the current step
     if not creating_job:
         current_step = 1
+    elif creating_job.delivery_name:
+        current_step = 4
     elif creating_job.pickup_name:
         current_step = 3
     else:
@@ -149,4 +152,5 @@ def create_job_page(request):
         "step1_form": step1_form,
         "step2_form": step2_form,
         "step3_form": step3_form,
+        "GOOGLE_MAP_API_KEY": settings.GOOGLE_MAP_API_KEY,
     })
