@@ -106,38 +106,43 @@ def payment_method_page(request):
         return render(request, 'customer/payment_method.html')
 
 
-
 @login_required(login_url="/sign-in/?next=/customer/")
 def create_job_page(request):
     current_customer = request.user.customer
     if not current_customer.stripe_payment_method_id:
         return redirect(reverse('customer:payment_method'))
 
-    creating_job = Job.objects.filter(customer=current_customer, status=Job.CREATING_STATUS).last()
+    creating_job = Job.objects.filter(
+        customer=current_customer, status=Job.CREATING_STATUS).last()
     step1_form = forms.JobCreateStep1Form(instance=creating_job)
     step2_form = forms.JobCreateStep2Form(instance=creating_job)
     if request.method == 'POST':
         if request.POST.get('step') == '1':
-            step1_form = forms.JobCreateStep1Form(request.POST, request.FILES, instance=creating_job)
+            step1_form = forms.JobCreateStep1Form(
+                request.POST, request.FILES, instance=creating_job)
             if step1_form.is_valid():
                 creating_job = step1_form.save(commit=False)
                 creating_job.customer = current_customer
                 creating_job.save()
                 return redirect(reverse('customer:create_job'))
+        elif request.POST.get('step') == '2':
+            step2_form = forms.JobCreateStep2Form(
+                request.POST, instance=creating_job)
+            if step2_form.is_valid():
+                creating_job = step2_form.save()
+                return redirect(reverse('customer:create_job'))
 
-    
     # Determine the current step 
     if not creating_job:
         current_step = 1
+    elif creating_job.pickup_name:
+        current_step = 3
     else:
         current_step = 2
 
-    
-
     return render(request, 'customer/create_job.html', {
-         "step1_form": step1_form,
-         "step2_form": step2_form,
-         "job": creating_job,
-         "step": current_step,
+        "job": creating_job,
+        "step": current_step,
+        "step1_form": step1_form,
+        "step2_form": step2_form,
     })
-
