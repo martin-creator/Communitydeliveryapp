@@ -42,6 +42,59 @@
         </div>
         <!-- RIGHT SIDE -->
         <div class="col-lg-8">
+            <!-- Step Tab -->
+            <div class="card mb-5">
+                <div class="card-body">
+
+                    <ul class="nav nav-pills nav-justified align-items-center mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="{% if step == 1 %} active {% endif %}" id="pills-info-tab" data-toggle="pill"
+                                href="#pills-info" role="tab" aria-controls="pills-info" aria-selected="true">Item
+                                Info</a>
+                        </li>
+                        <i class="fas fa-chevron-right"></i>
+                        <li class="nav-item" role="presentation">
+                            <a class="{% if step == 2 %} active {% endif %}" id="pills-pickup-tab" data-toggle="pill"
+                                href="#pills-pickup" role="tab" aria-controls="pills-pickup"
+                                aria-selected="false">Pickup</a>
+                        </li>
+                        <i class="fas fa-chevron-right"></i>
+                        <li class="nav-item" role="presentation">
+                            <a class="{% if step == 3 %} active {% endif %}" id="pills-delivery-tab" data-toggle="pill"
+                                href="#pills-delivery" role="tab" aria-controls="pills-delivery"
+                                aria-selected="false">Delivery</a>
+                        </li>
+                        <i class="fas fa-chevron-right"></i>
+                        <li class="nav-item" role="presentation">
+                            <a class="{% if step == 4 %} active {% endif %}" id="pills-payment-tab" data-toggle="pill"
+                                href="#pills-payment" role="tab" aria-controls="pills-payment"
+                                aria-selected="false">Payment</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <!-- Step Form -->
+            <b>CREATE A JOB</b>
+            <div class="tab-content" id="pills-tabContent">
+
+                <!-- Step1: Create Job Form Panel -->
+                <div class="tab-pane fade {% if step == 1%} show active {% endif %}" id="pills-info" role="tabpanel"
+                    aria-labelledby="pills-info-tab">
+                    <h1>Item Info</h1>
+                    <form method="POST" enctype="multipart/form-data">
+                        <b class="text-secondary">Item Information</b> </br>
+                        <div class="card bg-white mt-2 mb-5">
+                            <div class="card-body">
+                                {% csrf_token %}
+                                {% bootstrap_form step1_form %}
+                            </div>
+                        </div>
+                        <input type="hidden" name="step" value="1">
+                        <button type="submit" class="btn btn-warning">Save & Continue</button>
+                    </form>
+                </div>
             
         </div>
     </div>

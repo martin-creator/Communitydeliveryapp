@@ -3,11 +3,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from core.customer import forms
+from core.models import *
 
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
+
 
 # Create your views here.
 
@@ -109,5 +111,9 @@ def payment_method_page(request):
 def create_job_page(request):
     if not request.user.customer.stripe_payment_method_id:
         return redirect(reverse('customer:payment_method'))
-    return render(request, 'customer/create_job.html')
+
+    step1_form = forms.JobCreateStep1Form()
+    return render(request, 'customer/create_job.html', {
+         "step1_form": step1_form
+    })
 
