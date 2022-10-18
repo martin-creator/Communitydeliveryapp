@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
+{% block head %}
+<style>
+    #pills-tab a {
+        color: black;
+    }
+
+    #pills-tab a:hover {
+        color: orange;
+        text-decoration: none;
+    }
+
+    #pills-tab a.active {
+        color: orange;
+    }
+
+    #pickup-map,
+    #delivery-map {
+        height: 100%;
+    }
+</style>
+{% endblock %}
+
 
 {% block content %}
 
@@ -20,12 +42,7 @@
         </div>
         <!-- RIGHT SIDE -->
         <div class="col-lg-8">
-            <!-- Step Tab -->
-            <div class="card mb-5">
-                <div class="card-body">
-                    
-                </div>
-            </div>
+            
         </div>
     </div>
 
