@@ -82,5 +82,29 @@ class Job(models.Model):
     delivery_name = models.CharField(max_length=255, blank=True)
     delivery_phone = models.CharField(max_length=50, blank=True)
 
+
+    # Step 4:  # New Fields Added to the Database
+    duration = models.IntegerField(default=0)
+    distance = models.FloatField(default=0)
+    price = models.FloatField(default=0)
+
     def __str__(self):
         return self.name
+
+
+class Transaction(models.Model):
+    IN_STATUS = "in"
+    OUT_STATUS = "out"
+    STATUSES = (
+        (IN_STATUS, 'In'),
+        (OUT_STATUS, 'Out'),
+    )
+
+    stripe_payment_intent_id = models.CharField(max_length=255, unique=True)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    amount = models.FloatField(default=0)
+    status = models.CharField(max_length=20, choices=STATUSES, default=IN_STATUS)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.stripe_payment_intent_id

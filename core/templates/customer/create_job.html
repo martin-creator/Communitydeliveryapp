@@ -204,6 +204,42 @@
                </form>
            </div>
 
+                 <!-- Step4: Payment Form -->
+                 <div class="tab-pane fade {% if step == 4 %} show active {% endif %}" id="pills-payment" role="tabpanel"
+                 aria-labelledby="pills-payment-tab">
+                 <h1>Payment</h1>
+
+                 <form method="POST">
+                     <b class="text-secondary">Payment Method</b>
+                     <div class="card bg-white mt-2 mb-5">
+                         <div class="card-body">
+
+                             {% csrf_token %}
+
+                             <div class="form-group">
+                                 <label>Your Credit/Debit Card</label>
+                                 <input class="form-control"
+                                     value="**** **** **** {{ request.user.customer.stripe_card_last4}}" disabled>
+                             </div>
+
+                             <div class="form-group">
+                                 <label>Price</label>
+                                 <input class="form-control" value='${{ job.price}}' disabled>
+                             </div>
+
+                         </div>
+
+                         <input type="hidden" name="step" value="4">
+
+                     </div>
+
+                     <button type="button" class="btn btn-outline-warning"
+                         onclick="$('#pills-delivery-tab').tab('show');">Back</button>
+                     <button type="submit" class="btn btn-warning">Create Job</button>
+                
+                 </form>
+             </div>
+
 
 
             
@@ -238,7 +274,6 @@
         const biasInputElement = document.getElementById("use-location-bias");
         const strictBoundsInputElement = document.getElementById("use-strict-bounds");
         const options = {
-            componentRestrictions: { country: "ug" },
             fields: ["formatted_address", "geometry", "name"],
             origin: map.getCenter(),
             strictBounds: false,

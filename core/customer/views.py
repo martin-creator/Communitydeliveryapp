@@ -1,4 +1,5 @@
 import stripe
+import requests
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -134,7 +135,78 @@ def create_job_page(request):
             if step2_form.is_valid():
                 creating_job = step2_form.save()
                 return redirect(reverse('customer:create_job'))
-        
+        elif request.POST.get('step') == '3':
+            step3_form = forms.JobCreateStep3Form(
+                request.POST, instance=creating_job)
+            creating_job = step3_form.save()
+
+            if step3_form.is_valid():
+                # Get distance using Google API "Distance Matrix"
+                try:
+                    r = requests.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins={}&destinations={}&mode=driving&key={}".format(
+                        creating_job.pickup_address,
+                        creating_job.delivery_address,
+                        settings.GOOGLE_MAP_API_KEY
+                    ))
+
+                    print(r.json()['rows'])
+                    print(r.json())
+                    # =>[{'elements': [{'distance': {'text': '29.3 km', 'value': 29318}, 'duration': {'text': '1 hour 7 mins', 'value': 4008}, 'status': 'OK'}]}]
+
+                    result = r.json()['rows']
+
+                    distance = result[0]['elements'][0]['distance']['value']
+                    duration = result[0]['elements'][0]['duration']['value']
+                    creating_job.distance = round(distance/1000, 2)
+                    creating_job.duration = int(duration/60)
+                    creating_job.price = creating_job.distance * 2  # $1 per km
+                    print(creating_job.price)
+                    creating_job.save()
+
+                except Exception as e:
+                    print(e)
+                    messages.error(
+                        request, "Unfortunately, we do not support shipping at this distance")
+
+                # creating_job = step3_form.save()
+                return redirect(reverse('customer:create_job'))
+        elif request.POST.get('step') == '4':
+            if creating_job.price:
+                try:
+
+                    # Step 1: create payment intent
+                    payment_intent = stripe.PaymentIntent.create(
+                            amount=int(creating_job.price * 100),
+                            currency='usd',
+                            customer=current_customer.stripe_customer_id,
+                            payment_method=current_customer.stripe_payment_method_id,
+                            off_session=True,
+                            confirm=True,
+                        )
+
+                    # Step 2: Create transaction
+                    Transaction.objects.create(
+                            stripe_payment_intent_id = payment_intent['id'],
+                            job = creating_job,
+                            amount = creating_job.price,
+                        )
+
+                    # Step 3: Update job status
+                    creating_job.status = Job.PROCESSING_STATUS
+                    creating_job.save()
+
+
+                    return redirect(reverse('customer:home'))
+
+                except stripe.error.CardError as e:
+                    err = e.error
+                    # Error code will be authentication_required if authentication is needed
+                    print("Code is: %s" % err.code)
+                    payment_intent_id = err.payment_intent['id']
+                    payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+
+
+
 
     # Determine the current step
     if not creating_job:
