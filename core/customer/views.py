@@ -176,25 +176,24 @@ def create_job_page(request):
 
                     # Step 1: create payment intent
                     payment_intent = stripe.PaymentIntent.create(
-                            amount=int(creating_job.price * 100),
-                            currency='usd',
-                            customer=current_customer.stripe_customer_id,
-                            payment_method=current_customer.stripe_payment_method_id,
-                            off_session=True,
-                            confirm=True,
-                        )
+                        amount=int(creating_job.price * 100),
+                        currency='usd',
+                        customer=current_customer.stripe_customer_id,
+                        payment_method=current_customer.stripe_payment_method_id,
+                        off_session=True,
+                        confirm=True,
+                    )
 
                     # Step 2: Create transaction
                     Transaction.objects.create(
-                            stripe_payment_intent_id = payment_intent['id'],
-                            job = creating_job,
-                            amount = creating_job.price,
-                        )
+                        stripe_payment_intent_id=payment_intent['id'],
+                        job=creating_job,
+                        amount=creating_job.price,
+                    )
 
                     # Step 3: Update job status
                     creating_job.status = Job.PROCESSING_STATUS
                     creating_job.save()
-
 
                     return redirect(reverse('customer:home'))
 
@@ -203,10 +202,8 @@ def create_job_page(request):
                     # Error code will be authentication_required if authentication is needed
                     print("Code is: %s" % err.code)
                     payment_intent_id = err.payment_intent['id']
-                    payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
-
-
-
+                    payment_intent = stripe.PaymentIntent.retrieve(
+                        payment_intent_id)
 
     # Determine the current step
     if not creating_job:
@@ -225,4 +222,34 @@ def create_job_page(request):
         "step2_form": step2_form,
         "step3_form": step3_form,
         "GOOGLE_MAP_API_KEY": settings.GOOGLE_MAP_API_KEY,
+    })
+
+
+@login_required(login_url="/sign-in/?next=/customer/")
+def current_jobs_page(request):
+    jobs = Job.objects.filter(
+        customer=request.user.customer,
+        status__in=[
+            Job.PROCESSING_STATUS,
+            Job.PICKING_STATUS,
+            Job.DELIVERING_STATUS,
+        ]
+    )
+    return render(request, 'customer/jobs.html', {
+        "jobs": jobs
+    })
+
+
+@login_required(login_url="/sign-in/?next=/customer/")
+def archived_jobs_page(request):
+    jobs = Job.objects.filter(
+        customer=request.user.customer,
+        status__in=[
+            Job.COMPLETED_STATUS,
+            Job.CANCELED_STATUS,
+        ]
+    )
+
+    return render(request, 'customer/jobs.html', {
+        "jobs": jobs
     })
