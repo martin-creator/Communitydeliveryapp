@@ -1,4 +1,4 @@
-from .models import Customer
+from .models import Customer, Courier
 
 class ProfileMiddleware:
     def __init__(self, get_response):
@@ -8,8 +8,11 @@ class ProfileMiddleware:
     def __call__(self, request):
         # Code to be executed for each request before
         # the view (and later middleware) are called.
-        if request.user.is_authenticated and not hasattr(request.user, 'customer'):
+        if request.user.is_authenticated and not hasattr(request.user, 'customer'): # automatically create customer account for user
             Customer.objects.create(user=request.user)
+
+        if request.user.is_authenticated and not hasattr(request.user, 'courier'):
+            Courier.objects.create(user=request.user)
 
         response = self.get_response(request)
 
