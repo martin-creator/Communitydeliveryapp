@@ -4,7 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from core.models import *
 from django.utils import timezone
 
-@csrf_exempt # it means this page is safe, you dont need to check the csrf
+
+@csrf_exempt  # it means this page is safe, you dont need to check the csrf
 @login_required(login_url="/courier/sign-in/")
 def available_jobs_api(request):
     # jobs = Job.objects.filter(status=Job.PROCESSING_STATUS)  # This will return query set
@@ -13,4 +14,56 @@ def available_jobs_api(request):
     return JsonResponse({
         "success": True,
         "jobs": jobs,
+    })
+
+
+@csrf_exempt
+@login_required(login_url="/courier/sign-in/")
+def current_job_update_api(request, id):
+    job = Job.objects.filter(
+        id=id,
+        status__in=[
+            Job.PICKING_STATUS,
+            Job.DELIVERING_STATUS,
+        ]
+    ).last()
+
+    if job.status == Job.PICKING_STATUS:
+        job.pickup_photo = request.FILES['pickup_photo']
+        job.pickedup_at = timezone.now()
+        job.status = Job.DELIVERING_STATUS
+        job.save()
+
+        # try:
+        #     layer = get_channel_layer()
+        #     async_to_sync(layer.group_send)("job_" + str(job.id), {
+        #         'type': 'job_update',
+        #         'job': {
+        #             'status': job.get_status_display(),
+        #             'pickup_photo': job.pickup_photo.url,
+        #         }
+        #     })
+        # except:
+        #     pass
+
+    elif job.status == Job.DELIVERING_STATUS:
+        job.delivery_photo = request.FILES['delivery_photo']
+        job.delivered_at = timezone.now()
+        job.status = Job.COMPLETED_STATUS
+        job.save()
+
+        # try:
+        #     layer = get_channel_layer()
+        #     async_to_sync(layer.group_send)("job_" + str(job.id), {
+        #         'type': 'job_update',
+        #         'job': {
+        #             'status': job.get_status_display(),
+        #             'delivery_photo': job.delivery_photo.url,
+        #         }
+        #     })
+        # except:
+        #     pass
+
+    return JsonResponse({
+        "success": True
     })
