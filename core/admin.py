@@ -1,6 +1,14 @@
 from django.contrib import admin
 #from . import models
 from .models import *
+from django.conf import settings
+from paypalrestsdk import configure, Payout
+
+configure({
+    "mode": settings.PAYPAL_MODE,
+    "client_id": settings.PAYPAL_CLIENT_ID,
+    "client_secret": settings.PAYPAL_CLIENT_SECRET,
+})
 
 
 

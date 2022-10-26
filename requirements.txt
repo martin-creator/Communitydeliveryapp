@@ -10,9 +10,10 @@ CacheControl==0.12.11
 cachetools==5.2.0
 certifi==2022.9.24
 cffi==1.15.1
+chardet==3.0.4
 charset-normalizer==2.1.1
 Click==7.0
-cryptography==2.8
+cryptography==38.0.1
 defusedxml==0.7.1
 Django==3.1.3
 django-bootstrap4==2.3.1
@@ -40,7 +41,7 @@ grpcio==1.49.1
 grpcio-status==1.49.1
 gunicorn==20.0.4
 httplib2==0.20.4
-idna==3.4
+idna==2.10
 importlib-metadata==4.11.4
 importlib-resources==5.7.1
 iniconfig==1.1.1
@@ -53,6 +54,7 @@ numpy==1.15.0
 oauthlib==3.2.1
 packaging==21.3
 paramiko==2.11.0
+paypalrestsdk==1.13.1
 Pillow==8.0.1
 pluggy==0.13.1
 postgres==4.0
@@ -66,11 +68,12 @@ pycodestyle==2.9.1
 pycparser==2.21
 PyJWT==2.5.0
 PyNaCl==1.3.0
+pyOpenSSL==22.1.0
 pyparsing==3.0.9
 pytest==6.2.2
 python3-openid==3.2.0
 pytz==2022.4
-requests==2.28.1
+requests==2.25.0
 requests-oauthlib==1.3.1
 rsa==4.9
 ruamel.yaml==0.16.5
