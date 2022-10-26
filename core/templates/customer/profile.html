@@ -1,31 +1,10 @@
 {% extends 'customer/base.html' %}
 {% load bootstrap4 %}
+
 {% block head %}
+{% include 'load_firebase.html' %}
+{% endblock %}
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-messaging.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-https://firebase.google.com/docs/web/setup#available-libraries -->
-
-<script>
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAd44NtKzs-G_4k5zuxNKw2_laWj8cMv9Y",
-    authDomain: "quick-parcel-92a1f.web.app",
-    projectId: "quick-parcel-92a1f",
-    storageBucket: "quick-parcel-92a1f.appspot.com",
-    messagingSenderId: "481072622582",
-    appId: "1:481072622582:web:8237660a8722fdf79df5d7",
-  };
-
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
-
-{% endblock %} 
 {% block main %}
 <!--Basic Information-->
 <b class="text-secondary">Basic Information</b><br />
