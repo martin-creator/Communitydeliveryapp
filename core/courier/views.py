@@ -106,23 +106,23 @@ def archived_jobs_page(request):
         "jobs": jobs,
     })
 
-# @login_required(login_url="/sign-in/?next=/courier/")
-# def profile_page(request):
+@login_required(login_url="/sign-in/?next=/courier/")
+def profile_page(request):
 
-#     jobs = Job.objects.filter(
-#         courier=request.user.courier,
-#         status = Job.COMPLETED_STATUS,
-#     )
+    jobs = Job.objects.filter(
+        courier=request.user.courier,
+        status = Job.COMPLETED_STATUS,
+    )
 
-#     total_earnings = round(sum(job.price for job in jobs) * 0.8, 2)
-#     total_jobs = len(jobs)
-#     total_km = sum(job.distance for job in jobs)
+    total_earnings = round(sum(job.price for job in jobs) * 0.8, 2)
+    total_jobs = len(jobs)
+    total_km = sum(job.distance for job in jobs)
 
-#     return render(request, 'courier/profile.html', {
-#         "total_earnings": total_earnings,
-#         "total_jobs": total_jobs,
-#         "total_km": total_km,
-#     })
+    return render(request, 'courier/profile.html', {
+        "total_earnings": total_earnings,
+        "total_jobs": total_jobs,
+        "total_km": total_km,
+    })
 
 # @login_required(login_url="/sign-in/?next=/courier/")
 # def payout_method_page(request):
