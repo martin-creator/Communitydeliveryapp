@@ -36,8 +36,7 @@ DEBUG = env('DEBUG')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*',]
 
 # Application definition
 
@@ -175,3 +174,6 @@ PAYPAL_MODE="sandbox"
 PAYPAL_CLIENT_ID=env('PAYPAL_CLIENT_ID')
 PAYPAL_CLIENT_SECRET=env('PAYPAL_CLIENT_SECRET')
 
+
+# NOTIFICATION_URL = "https://afternoon-sea-22576.herokuapp.com/"
+NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
