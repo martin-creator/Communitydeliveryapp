@@ -1,3 +1,5 @@
+from asgiref.sync import async_to_sync
+from channels.layers import  get_channel_layer
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -35,23 +37,23 @@ def available_job_page(request, id):
 
         return redirect(reverse('courier:available_jobs'))
 
-    # if request.method == "POST":
-    #     job.courier = request.user.courier
-    #     job.status = Job.PICKING_STATUS
-    #     job.save()
+    if request.method == "POST":
+        job.courier = request.user.courier
+        job.status = Job.PICKING_STATUS
+        job.save()
 
-    #     try:
-    #         layer = get_channel_layer()
-    #         async_to_sync(layer.group_send)("job_" + str(job.id), {
-    #             'type': 'job_update',
-    #             'job': {
-    #                 'status': job.get_status_display(),
-    #             }
-    #         })
-    #     except:
-    #         pass
+        try:
+            layer = get_channel_layer()
+            async_to_sync(layer.group_send)("job_" + str(job.id), {
+                'type': 'job_update',
+                'job': {
+                    'status': job.get_status_display(),
+                }
+            })
+        except:
+            pass
 
-    #     return redirect(reverse('courier:available_jobs'))
+        return redirect(reverse('courier:available_jobs'))
 
     return render(request, 'courier/available_job.html', {
         "job": job,
