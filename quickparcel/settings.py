@@ -179,4 +179,14 @@ PAYPAL_CLIENT_SECRET=env('PAYPAL_CLIENT_SECRET')
 # NOTIFICATION_URL = "https://afternoon-sea-22576.herokuapp.com/"
 NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
 
-ASGI_APPLICATION = "fastparcel.asgi.application"
+ASGI_APPLICATION = "quickparcel.asgi.application"
+
+# Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
