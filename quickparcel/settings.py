@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'social_django',
-    'core.apps.CoreConfig'
+    'core.apps.CoreConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -177,3 +178,5 @@ PAYPAL_CLIENT_SECRET=env('PAYPAL_CLIENT_SECRET')
 
 # NOTIFICATION_URL = "https://afternoon-sea-22576.herokuapp.com/"
 NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
+
+ASGI_APPLICATION = "fastparcel.asgi.application"
