@@ -1,6 +1,6 @@
 # Quickparcel- decentralizing Africa's supply chain system
 ![header](/images/header.png)
-> The pandemic exposed that Africa's lack of digital work infrastructure has the potential to disrupt the way work was actually working.  We need to creates digital spaces to network and create projects outside the conventional four cournes of the offices/classroom.   The lack of digital work infrastructure has led to scenarios where talent is  equally distributed however, opportunity  is not. At Africalancer, we hope to change this narrative by creating  leveled plaform for talent to connect with opportunity. 
+>  At Quickparcel , we create opportunities with all communities with vechiles to participate in making the movement of goods reliable and cheaper for all. 
 
 
 > Live demo [Project will soon be moved to  the cloud](#). <!-- If you have the project hosted somewhere, include the link here. -->
@@ -21,12 +21,14 @@
 
 ## General Information
 
-Today, more than 60% of Africa’s population is under the age of 25. By 2030, young Africans are expected to constitute 42% of global youth.  This is a great work force  that  can propel  the future of the continent forward if only we can  create  networking opportunities  for our youth to grow their skills.  In Africa, we dont have infrastructure to supporyt the connectintu of talent and opportunity that is awesome. 
+COVID-19 has laid bare the vulnerability of the supply chain model that has dominated the way African firms have organised their production. In this model firms rely on multiple suppliers, many of whom are located far away (mostly in China).
 
-Africalancer comes in  to provide infrastructure to connect talent and opportunity to catalayze Africa's economic prosperity.  Our UX/UI from the very start takes into account the local digital literacy among our prospective users.  Additionally,  we enable our users to create wages which enables them to create fair deals that would otherwise be hard in realife. We also create  a space for  business owners to access  diverse talent for their jobs. 
+With goods stuck at factories and ports around the world and shortages emerging, the pandemic disrupted the supply of most essentials. It also exposed the weakness of global interdependencies. Foremost among these were of course the essential medical devices needed to save people’s lives. Shortages were apparent also in many food items, consumer electronics and other necessities.
 
+With this dependency on centralized  supply chain structures , it has has been hard  for the layman to participate and small business  have contiunued to have challenges estabilishing healthy relationships with their customers. That is what  Quickparcel addresses by decentralizing the suppluy management chain allowing the community  to offer delivery services for different businesses. 
 
-To this end, it is clear that Airlancer gains pride in leading the race to  provide infrastructure for Africa's digital economy.
+Quickparcel creates jobs while also enabling businesses capture the value from scale.  
+
 
 
 
@@ -34,10 +36,10 @@ To this end, it is clear that Airlancer gains pride in leading the race to  prov
 
 ### 1. Backend Dependencies
 Our tech stack includes the following:
-- Ruby - version 2.6.2
-- Rails - version 6.0.6
-- Postgress (Database)
-- Check the [Gemfile](./Gemfile) for other dependencies. You should be careful when changing any   gem versions as this  can break the application. 
+- Python3 - version 3.8
+- Django - version 3.1.3
+- Sqlite (Database)
+- Check the [Requirements.txt](./requirements.txt) for other dependencies. You should be careful when changing any  package versions as this  can break the application. 
 
 ### 2. Frontend Dependencies
 Our tech stack includes the following:
@@ -51,42 +53,47 @@ Our tech stack includes the following:
 
 Ready features:
 
-- Verifying identity with social
-- User Profile features (avatar, bio, location, etc) just like Fiverr
-- User Dashboard managing all of jobs, requests and offers
-- Posting job in steps (including how to use ActionText with drag and drop photos)
-- Creating requests for freelancers
-- Making offers to clients' requests
-- Managing both Buying and Selling orders
-- Accept/Reject multiple offers
-- User settings for Payment and Payout methods
-- Earning Dashboard listing all history transactions for revenue and expenses
-- Sending SMS Notification when a seller got new sales
-- User identification with SMS (via mobile #) 
-- Credit Card processing with Stripe when buying a service
-- Build your own Wallet system handling income and expense
-- Build the Super Admin Dashboard (back-end) monitoring everything like Categories, Users, Jobs, for the whole platform
-- Super Admin can approve/reject Withdraw requests from sellers
-- Super Admin can view the Wallet history of specific users
-- Especially, the Escrow System that keeps track of funds per user and payout accordingly via Paypal API
-- Real-time Private Message with ActionCable
-- Attaching files to the conversation between sellers and buyers
-- Monthly Subscription Business system
-- Create Subscription Plans with $ via Stripe API
-- SuperHandle events via Stripe webhooks like subscribing, cancelling, etc
-- SuperSmart Calendar for monitoring job deadline with notification
+#### Customer - Web App
+- Authentication with Email/Facebook
+- Send welcome emails automatically
+- Upload Profile Photo
+- Mobile Number Verification (SMS)
+- Handle Credit Card with Stripe
+- In-app Notification
+- Real-time GPS Tracking
+
+
+#### Courier - Progressive Web App
+- List all jobs on Google Map
+- Real-time GPS Tracking
+- Route with distance and time
+- Taking photo from device’s camera
+- Total Earnings and Driven miles
+- Google Map API libraries
+- Push Notification
+
+
+- Super Admin Dashboard
+- Super Admin Authentication
+- Backend Dashboard with Django
+- Monitor Customers, Couriers, Orders
+- Mobile Number Verification (SMS)
+- Handle Payout with Paypal API
+
 
 
 
 
 ## Screenshots
 
-![photo](/images/fiver-1.png)
-![photo](/images/fiver-2.png)
-![photo](/images/fiver-3.png)
-![photo](/images/fiver-4.png)
-![photo](/images/fiver-5.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
+![photo](/images/delivery-1.png)
+![photo](/images/delivery-2.png)
+![photo](/images/delivery-3.png)
+![photo](/images/delivery-4.png)
+![photo](/images/delivery-5.png)
+![photo](/images/delivery-6.png)
+![photo](/images/delivery-7.png)
+
 
 
 ## Setup
