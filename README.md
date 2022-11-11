@@ -47,6 +47,7 @@ Our tech stack includes the following:
 - Javascript-jquery
 - HTML
 - CSS
+- Jinja2
 
 
 ## Features
@@ -98,37 +99,29 @@ Ready features:
 
 ## Setup
 
-* This project is built on ruby 2.6.2 and rails 6.0.6, if you using Ubuntu, follow the steps below to install rails:
+* This project is built on python 3.8 and django 3.1.3, if you using Ubuntu, follow the steps below to install setup your project:
 ``` 
 1 - sudo apt update #update system repos
-2 - sudo apt install git curl autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev #ruby libraries and compilers
-3- curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash # install rbenv2
-    #Bash commands to update .bashrc file
-4 - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-    echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-    source ~/.bashrc
-
-5 - rbenv -v # check rbenv version
-6 - rbenv install -l # check versions of ruby on the systme
-7 - rbenv install [version number] # install a specific ruby version
-8 - rbenv global [version number] # make installed ruby version as the global version
-9 - ruby --version # check ruby version
-10 - gem install bundler # install bundler 
-10 - gem install rails -v @version number # install rails
-11 - rails -version  # check the rails version
-12 - git clone @africalancer git repo
-13 - cd @africalancer directory
-14 - bundle # install gem dependences
-15 - rails start # start your rails application
+2 - sudo apt-get install python3.8 
+3 - sudo apt-get -y install python3-pip
+4 - sudo pip3 install virtualenv 
+5 - virtualenv -p python3 myenv
+6 - source myenv/bin/activate
+7 - git clone https://github.com/martin-creator/Communitydeliveryapp.git
+8 - cd Communitydeliveryapp.git
+7 - pip3 install -r requirements.txt 
+8 - Please visit [firebase console](https://console.firebase.google.com/), [google maps console](https://console.cloud.google.com/), your email host to update variable in [settings.py](./quickparcel/settings.py)
+9 - python3 manage.py runserver
+10 - Visit http://127.0.0.1:8000/ to see your application
 
 
 ```
-Incase you get any errors during installation, you can delete the **Gemfile.lock** and then run **bundle** again. 
+
 
 
 ## Usage
 
-This project is a template for  any marketplace business models  that have booking,  review, payments, and job creation in the functionality.  It is therefore very possible for anyone to use it as a starting point to build a startup  to improve   lives in your community and even your own life!
+This project is a template for  any delivery business models  that have , gps tracking, booking,  review, payments, and job creation in the functionality.  It is therefore very possible for anyone to use it as a starting point to build a startup  to improve   lives in your community and even your own life!
 
 
 ## Project Status
@@ -140,22 +133,21 @@ Project is: _in progress_
 
 Room for improvement:
 - Refactoring code to follow DRY & KISS principles
-- Upgrading codebase to  newer ruby and rails  versions
-- Include documentation in ruby and html files
+- Include documentation in python and html files
 - Clean code to remove any comments
 
 To do:
 - Prepare app for deployment
 - Integrate mobile money payments
-- Include online status messaging functionality
+- Seperating customer and courier models
+- Changing database to  postgress
+
 
 
 ## Acknowledgements
 
 - This project was inspired by [Code4Startup](https://code4startup.com/)
 - Many thanks to [Leo Chan](https://hk.linkedin.com/in/leowchan) for giving me a scholarship to hone my software engineering skills. 
-- <https://www.vultr.com/docs/installing-ruby-on-rails-on-ubuntu-20-04/>
-- <https://phoenixnap.com/kb/install-ruby-ubuntu>
 
 
 ## Contact
