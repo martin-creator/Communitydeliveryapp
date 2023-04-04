@@ -176,8 +176,9 @@ PAYPAL_CLIENT_ID=env('PAYPAL_CLIENT_ID')
 PAYPAL_CLIENT_SECRET=env('PAYPAL_CLIENT_SECRET')
 
 
-# NOTIFICATION_URL = "https://afternoon-sea-22576.herokuapp.com/"
-NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
+NOTIFICATION_URL = "https://afternoon-lake-58119.herokuapp.com/"
+
+# NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
 
 ASGI_APPLICATION = "quickparcel.asgi.application"
 
@@ -190,3 +191,8 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# Activate Django Heroku
+import django_on_heroku
+django_on_heroku.settings(locals())
