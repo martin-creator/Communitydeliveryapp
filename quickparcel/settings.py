@@ -177,6 +177,7 @@ PAYPAL_CLIENT_SECRET=env('PAYPAL_CLIENT_SECRET')
 
 
 NOTIFICATION_URL = "https://communitydelivery.herokuapp.com"
+#fixed this
 
 # NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
 
