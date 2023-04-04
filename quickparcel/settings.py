@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-import environ 
+import environ
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
 
