@@ -21,6 +21,8 @@ paypalrestsdk = "==1.13.1"
 requests = "==2.27.1"
 stripe = "==2.55.1"
 pillow = "*"
+psycopg2-binary = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
