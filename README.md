@@ -3,7 +3,7 @@
 >  At Quickparcel , we create opportunities with all communities with vechiles to participate in making the movement of goods reliable and cheaper for all. 
 
 
-> Live demo [Project will soon be moved to  the cloud](#). <!-- If you have the project hosted somewhere, include the link here. -->
+> [Live demo](https://communitydelivery.herokuapp.com/). <!-- If you have the project hosted somewhere, include the link here. -->
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -137,10 +137,9 @@ Room for improvement:
 - Clean code to remove any comments
 
 To do:
-- Prepare app for deployment
 - Integrate mobile money payments
 - Seperating customer and courier models
-- Changing database to  postgress
+
 
 
 
