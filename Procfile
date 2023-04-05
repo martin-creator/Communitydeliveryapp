@@ -1,1 +1,1 @@
-web: gunicorn fastparcel.wsgi
+web: gunicorn quickparcel.wsgi
