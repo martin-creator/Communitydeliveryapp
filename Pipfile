@@ -20,6 +20,7 @@ firebase-admin = "==4.4.0"
 paypalrestsdk = "==1.13.1"
 requests = "==2.27.1"
 stripe = "==2.55.1"
+pillow = "*"
 
 [dev-packages]
 
