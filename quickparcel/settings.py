@@ -186,7 +186,7 @@ NOTIFICATION_URL = "https://communitydelivery.herokuapp.com"
 
 # NOTIFICATION_URL = " https://0eae-41-75-188-164.ngrok.io/"
 
-ASGI_APPLICATION = "quickparcel.asgi.application"
+ASGI_APPLICATION = "fastparcel.asgi.application"
 
 # Channels
 CHANNEL_LAYERS = {
