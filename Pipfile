@@ -13,6 +13,7 @@ soupsieve = "==2.3.2.post1"
 sqlparse = "==0.4.3"
 django-environ = "==0.9.0"
 django-on-heroku = "*"
+social-auth-app-django = "*"
 
 [dev-packages]
 
